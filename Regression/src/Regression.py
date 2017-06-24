@@ -15,7 +15,7 @@ DataFrame = DataFrame[['Adj. Close', 'HL_PCT', 'CNG_PCT', 'Adj. Volume']]
 
 ForeCast_col = 'Adj. Close'				# Selecting it as our prediction
 DataFrame.fillna(-99999, inplace=True)			# Filling up NaN columns
-ForeCast_out = int(math.ceil(0.0001 * len(DataFrame)))	# 10% of the number of Records
+ForeCast_out = int(math.ceil(0.0001 * len(DataFrame)))	# 0.01% of the number of Records
 
 DataFrame['Label'] = DataFrame[ForeCast_col].shift(-ForeCast_out)	# Shifting our columns
 DataFrame.dropna(inplace=True)						# Remove NaN
