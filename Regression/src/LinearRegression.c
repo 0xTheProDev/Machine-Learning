@@ -58,20 +58,21 @@ RegressionObj LinearRegression(int n, double x[], double y[]) {
 	_x = _x / n, _y = _y / n;
 	
 	// Calculating Slope and y-intercept
-	double m, c, dx = 0.0, dy = 0.0;
-	for (int i = 0; i < n; i++)
-		dx += (x[i] - _x) * (x[i] - _x), dy += (x[i] - _x) * (y[i] - _y);
-	m = dy / dx;
+	double m, c, dx[n], dx2 = 0.0, dy[n], dxdy = 0.0;
+	for (int i = 0; i < n; i++) {
+		dx[i] = (x[i] - _x), dy[i] = (y[i] - _y);
+		dx2 += dx[i] * dx[i], dxdy += dx[i] * dy[i];
+	}
+	m = dxdy / dx2;
 	c = _y - m * _x;
 	
 	// Calculating Estimation and R2
-	double Y[n], R2, dY = 0.0;
-	dy = 0.0;
+	double Y[n], R2, dy2 = 0.0, dY = 0.0;
 	for (int i = 0; i < n; i++) {
 		Y[i] = m * x[i] + c;
-		dy += (y[i] - _y) * (y[i] - _y), dY += (Y[i] - _y) * (Y[i] - _y);
+		dy2 += dy[i] * dy[i], dY += (Y[i] - _y) * (Y[i] - _y);
 	}
-	R2 = dY / dy;
+	R2 = dY / dy2;
 	
 	// Calculating Standard Error of Estimation
 	double StdErr, var;
